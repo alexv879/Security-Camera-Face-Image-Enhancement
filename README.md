@@ -31,6 +31,16 @@ State-of-the-art face image enhancement system specifically designed for securit
 - 🐳 **Docker Support** - Production-ready containerized deployment
 - 🧪 **Comprehensive Tests** - Unit and integration test coverage
 
+### Advanced Capabilities (NEW!)
+- 🎭 **Progressive Enhancement** - Multi-stage enhancement for extreme quality
+- 📺 **Real-Time Streaming** - Live video stream enhancement with adaptive quality
+- 🎨 **Visualization Tools** - Attention maps, quality charts, difference maps
+- 🧠 **Perceptual Loss** - VGG-based perceptual quality metrics
+- 🎯 **Face Fidelity** - Preserve facial identity while enhancing
+- 📊 **Guided Enhancement** - Reference-based style transfer
+- 🔍 **Explainability** - Understand what the model is doing
+- ⚡ **Temporal Smoothing** - Smooth enhancement across video frames
+
 ## 🚀 Quick Start
 
 ### Installation
@@ -56,7 +66,7 @@ pip install -e .
 #### Command Line
 
 ```bash
-# Enhance a single image
+# Basic enhancement
 face-enhance enhance input.jpg --output enhanced.jpg
 
 # Batch process a directory
@@ -64,6 +74,18 @@ face-enhance batch /path/to/images --output-dir /path/to/output
 
 # Process video frames
 face-enhance video surveillance.mp4 --interval 30 --max-frames 100
+
+# Progressive multi-stage enhancement (NEW!)
+python scripts/progressive_enhance.py input.jpg --stages 3 --visualize
+
+# Real-time video stream enhancement (NEW!)
+python scripts/stream_enhance.py --source 0 --fps 15 --output output.mp4
+
+# Quality comparison with visualization (NEW!)
+python scripts/quality_comparison.py input.jpg --model gfpgan --upscale 2
+
+# Performance benchmarking
+python scripts/benchmark.py --device cuda --runs 100
 
 # View pipeline info
 face-enhance info
@@ -76,17 +98,28 @@ from face_enhancement.core.pipeline import EnhancementPipeline
 from face_enhancement.config import AppConfig
 import cv2
 
-# Initialize pipeline
+# Basic enhancement
 config = AppConfig()
 pipeline = EnhancementPipeline(config)
-
-# Load and enhance image
 image = cv2.imread("low_quality_face.jpg")
 enhanced, metadata = pipeline.process_image(image)
 
-# Save result
-cv2.imwrite("enhanced_face.jpg", enhanced)
-print(f"Detected {metadata['num_faces']} faces")
+# Progressive enhancement (NEW!)
+from face_enhancement.models.progressive_enhancer import ProgressiveEnhancer
+progressive = ProgressiveEnhancer(stages=3, base_model="gfpgan")
+enhanced, metadata = progressive.enhance(image, intermediate_outputs=True)
+
+# Real-time streaming (NEW!)
+from face_enhancement.streaming import VideoStreamEnhancer
+stream = VideoStreamEnhancer(video_source="0", target_fps=15)
+stream.run(display=True)
+
+# Quality assessment with visualization (NEW!)
+from face_enhancement.utils.quality_metrics import QualityAssessment
+from face_enhancement.utils.visualization import EnhancementVisualizer
+
+metrics = QualityAssessment.calculate_all_metrics(enhanced)
+vis = EnhancementVisualizer.create_side_by_side(image, enhanced)
 ```
 
 #### REST API
