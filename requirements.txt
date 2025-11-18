@@ -69,3 +69,36 @@ psutil>=5.9.0
 
 # Caching
 redis>=4.6.0  # Optional: For Redis caching
+
+# 2025+ Cutting-Edge Features
+
+# Diffusion models
+diffusers>=0.25.0
+transformers>=4.36.0
+accelerate>=0.25.0
+
+# Vision Transformers
+timm>=0.9.12
+
+# Web UI
+gradio>=4.13.0
+
+# Mobile deployment
+tensorflow>=2.15.0  # For TFLite conversion
+onnx-tf>=1.10.0
+tf2onnx>=1.15.0
+
+# Privacy-preserving ML
+opacus>=1.4.0  # Differential privacy
+tenseal>=0.3.14  # Homomorphic encryption
+
+# 3D reconstruction
+trimesh>=4.0.0  # For mesh processing
+pyrender>=0.1.45  # For rendering (optional)
+
+# Advanced dependencies (optional)
+# Install based on your needs:
+# - For full diffusion support: pip install diffusers[torch] transformers accelerate
+# - For privacy: pip install opacus tenseal
+# - For mobile: pip install tensorflow onnx-tf
+# - For 3D: pip install trimesh pyrender

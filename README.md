@@ -1,6 +1,20 @@
 # Face Enhancement AI 🎯
 
-State-of-the-art face image enhancement system specifically designed for security camera footage. Powered by advanced deep learning models including **GFPGAN**, **CodeFormer**, and **Real-ESRGAN**.
+State-of-the-art face image enhancement system specifically designed for security camera footage. Powered by advanced deep learning models including **GFPGAN**, **CodeFormer**, **Real-ESRGAN**, **Stable Diffusion**, and **Vision Transformers**.
+
+## 🌟 2025+ Cutting-Edge Features
+
+**NEW!** This system now includes the most advanced AI technologies:
+
+- 🎨 **Diffusion Models** - Stable Diffusion & ControlNet for photorealistic enhancement
+- 🔮 **Vision Transformers** - Swin Transformer & ViT for global context understanding
+- 🖥️ **Interactive Web UI** - Beautiful Gradio interface with 4 enhancement modes
+- 📦 **MLOps Platform** - Model versioning, A/B testing, deployment tracking, drift detection
+- 🌐 **3D Face Reconstruction** - 3D morphable models, novel view synthesis, pose estimation
+- 📱 **Mobile Deployment** - TensorFlow Lite support for iOS, Android, Raspberry Pi, Jetson
+- 🔒 **Privacy-Preserving ML** - Differential privacy, federated learning, homomorphic encryption
+
+**[See Full 2025+ Features Documentation →](docs/2025_FEATURES.md)**
 
 ## ✨ Features
 
