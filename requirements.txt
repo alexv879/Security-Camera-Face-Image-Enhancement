@@ -96,9 +96,30 @@ tenseal>=0.3.14  # Homomorphic encryption
 trimesh>=4.0.0  # For mesh processing
 pyrender>=0.1.45  # For rendering (optional)
 
+# Next-generation features (2025+)
+
+# NeRF and 3D rendering
+# nerfacc>=0.5.0  # For NeRF acceleration (optional)
+# tiny-cuda-nn>=1.7  # For Instant-NGP (optional, requires CUDA)
+
+# Segment Anything Model
+# segment-anything>=1.0  # Install from: pip install git+https://github.com/facebookresearch/segment-anything.git
+
+# CLIP for text-guided enhancement
+# clip @ git+https://github.com/openai/CLIP.git  # OpenAI CLIP
+
+# Explainable AI
+lime>=0.2.0  # LIME for local explanations
+shap>=0.43.0  # SHAP for feature importance
+captum>=0.6.0  # PyTorch interpretability library
+
 # Advanced dependencies (optional)
 # Install based on your needs:
 # - For full diffusion support: pip install diffusers[torch] transformers accelerate
 # - For privacy: pip install opacus tenseal
 # - For mobile: pip install tensorflow onnx-tf
 # - For 3D: pip install trimesh pyrender
+# - For NeRF: pip install nerfacc tiny-cuda-nn
+# - For SAM: pip install git+https://github.com/facebookresearch/segment-anything.git
+# - For CLIP: pip install git+https://github.com/openai/CLIP.git
+# - For XAI: pip install lime shap captum

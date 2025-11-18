@@ -16,6 +16,18 @@ State-of-the-art face image enhancement system specifically designed for securit
 
 **[See Full 2025+ Features Documentation →](docs/2025_FEATURES.md)**
 
+## 🔬 Next-Generation Research Features
+
+**NEWEST!** Bleeding-edge research features pushing the boundaries:
+
+- 🎭 **Neural Radiance Fields (NeRF)** - Photorealistic 3D reconstruction, Instant-NGP, novel view synthesis
+- 🎯 **Segment Anything (SAM)** - Pixel-perfect face segmentation, interactive refinement
+- 📝 **CLIP-Guided Enhancement** - Text-driven enhancement, semantic editing, style transfer
+- 🌙 **Low-Light Specialists** - Zero-DCE++, EnlightenGAN, RetinexNet for extreme conditions
+- 🔍 **Explainable AI (XAI)** - Grad-CAM, LIME, SHAP, Attribution Maps for full interpretability
+
+**[See Next-Gen Features Documentation →](docs/NEXTGEN_FEATURES.md)**
+
 ## ✨ Features
 
 ### Core Enhancement
