@@ -8,13 +8,22 @@ from typing import Optional
 import cv2
 import numpy as np
 from fastapi import FastAPI, File, HTTPException, UploadFile
-from fastapi.responses import StreamingResponse, JSONResponse
+from fastapi.responses import StreamingResponse, JSONResponse, Response
 from loguru import logger
 from pydantic import BaseModel, Field
+from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
 
 from face_enhancement.config import AppConfig
 from face_enhancement.core.pipeline import EnhancementPipeline
 from face_enhancement.utils.logger import setup_logger
+from face_enhancement.utils.metrics import (
+    track_request,
+    record_faces_detected,
+    record_image_size,
+    set_pipeline_info,
+)
+from face_enhancement.utils.quality_metrics import QualityAssessment
+from face_enhancement.utils.cache import get_cache
 
 
 # Initialize FastAPI app
@@ -27,6 +36,7 @@ app = FastAPI(
 # Global pipeline instance
 pipeline: Optional[EnhancementPipeline] = None
 config: Optional[AppConfig] = None
+cache = get_cache()
 
 
 class EnhanceRequest(BaseModel):
@@ -60,6 +70,9 @@ async def startup_event():
 
     config = AppConfig()
     pipeline = EnhancementPipeline(config)
+
+    # Set pipeline info for metrics
+    set_pipeline_info(pipeline.get_pipeline_info())
 
     logger.info("API server ready")
 
@@ -260,6 +273,10 @@ async def detect_faces(file: UploadFile = File(...)):
         # Detect faces
         faces = pipeline.detector.detect_faces(image)
 
+        # Record metrics
+        record_faces_detected(len(faces))
+        record_image_size(image.shape[1], image.shape[0])
+
         results = []
         for bbox, confidence, landmarks in faces:
             face_data = {
@@ -277,6 +294,84 @@ async def detect_faces(file: UploadFile = File(...)):
 
     except Exception as e:
         logger.error(f"Detection failed: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/metrics")
+async def metrics():
+    """Prometheus metrics endpoint."""
+    return Response(content=generate_latest(), media_type=CONTENT_TYPE_LATEST)
+
+
+@app.post("/quality")
+async def assess_quality(file: UploadFile = File(...)):
+    """
+    Assess image quality metrics.
+
+    Args:
+        file: Image file
+
+    Returns:
+        Quality metrics
+    """
+    try:
+        # Read uploaded file
+        contents = await file.read()
+        nparr = np.frombuffer(contents, np.uint8)
+        image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+
+        if image is None:
+            raise HTTPException(status_code=400, detail="Invalid image file")
+
+        # Calculate quality metrics
+        metrics = QualityAssessment.calculate_all_metrics(image)
+
+        return {
+            "metrics": metrics,
+            "image_shape": image.shape,
+        }
+
+    except Exception as e:
+        logger.error(f"Quality assessment failed: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/compare")
+async def compare_images(
+    original: UploadFile = File(...),
+    enhanced: UploadFile = File(...),
+):
+    """
+    Compare original and enhanced images with quality metrics.
+
+    Args:
+        original: Original image file
+        enhanced: Enhanced image file
+
+    Returns:
+        Comparison metrics
+    """
+    try:
+        # Read original
+        orig_contents = await original.read()
+        orig_nparr = np.frombuffer(orig_contents, np.uint8)
+        orig_image = cv2.imdecode(orig_nparr, cv2.IMREAD_COLOR)
+
+        # Read enhanced
+        enh_contents = await enhanced.read()
+        enh_nparr = np.frombuffer(enh_contents, np.uint8)
+        enh_image = cv2.imdecode(enh_nparr, cv2.IMREAD_COLOR)
+
+        if orig_image is None or enh_image is None:
+            raise HTTPException(status_code=400, detail="Invalid image file")
+
+        # Compare
+        comparison = QualityAssessment.compare_images(orig_image, enh_image)
+
+        return comparison
+
+    except Exception as e:
+        logger.error(f"Comparison failed: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 

@@ -4,16 +4,32 @@ State-of-the-art face image enhancement system specifically designed for securit
 
 ## ✨ Features
 
-- 🔍 **Advanced Face Detection** - RetinaFace with landmark detection
+### Core Enhancement
+- 🔍 **Advanced Face Detection** - RetinaFace with facial landmark detection
 - 🎨 **Multiple Enhancement Models** - GFPGAN and CodeFormer support
 - 🌙 **Low-Light Enhancement** - CLAHE-based brightness optimization
-- 🔊 **Noise Reduction** - Bilateral and NLM denoising
+- 🔊 **Noise Reduction** - Bilateral filtering and NLM denoising
 - 📈 **Super-Resolution** - Up to 4x upscaling with Real-ESRGAN
-- 🎬 **Video Support** - Extract and enhance frames from video footage
-- ⚡ **Batch Processing** - Process multiple images efficiently
-- 🌐 **REST API** - FastAPI-based web service
-- 🎯 **CLI Tool** - Rich command-line interface
-- 🐳 **Docker Support** - Containerized deployment ready
+- 🎭 **Model Ensemble** - Combine multiple models for superior results
+
+### Advanced Preprocessing
+- 🌈 **HDR Tone Mapping** - Reinhard, Drago, and Mantiuk algorithms
+- 🎨 **Advanced Color Correction** - Gray world, Max RGB, Multi-scale Retinex
+- 🌫️ **Fog/Haze Removal** - Dark channel prior algorithm
+- ✨ **Perceptual Sharpening** - Unsharp masking in perceptual color space
+- 🔆 **Local Adaptive Enhancement** - Varying lighting condition handling
+
+### Production Features
+- 🌐 **REST API** - FastAPI-based web service with OpenAPI docs
+- 🎯 **CLI Tool** - Rich command-line interface with progress bars
+- 📊 **Prometheus Metrics** - Real-time monitoring and observability
+- 📈 **Quality Assessment** - PSNR, SSIM, sharpness, colorfulness metrics
+- ⚡ **Caching Layer** - File-based and Redis caching support
+- 🚀 **Model Optimization** - ONNX export and quantization
+- 🎬 **Video Support** - Extract and enhance video frames
+- ⚡ **Batch Processing** - Efficient multi-image processing
+- 🐳 **Docker Support** - Production-ready containerized deployment
+- 🧪 **Comprehensive Tests** - Unit and integration test coverage
 
 ## 🚀 Quick Start
 
