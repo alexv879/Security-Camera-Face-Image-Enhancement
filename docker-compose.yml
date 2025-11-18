@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  face-enhancement-api:
+    build: .
+    container_name: face-enhancement-ai
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./logs:/app/logs
+      - ./config:/app/config
+    environment:
+      - FACE_ENHANCE_DEVICE=cuda
+      - FACE_ENHANCE_LOG_LEVEL=INFO
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  face-enhancement-cpu:
+    build: .
+    container_name: face-enhancement-ai-cpu
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./logs:/app/logs
+    environment:
+      - FACE_ENHANCE_DEVICE=cpu
+      - FACE_ENHANCE_LOG_LEVEL=INFO
+    restart: unless-stopped
+    profiles:
+      - cpu-only

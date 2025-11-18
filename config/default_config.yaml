@@ -1,0 +1,52 @@
+# Default configuration for Face Enhancement AI
+
+# Device configuration
+device: cuda  # Options: 'cuda', 'cpu'
+log_level: INFO  # Options: DEBUG, INFO, WARNING, ERROR
+enable_metrics: true
+
+# Directory paths
+models_dir: models/weights
+output_dir: data/output
+log_dir: logs
+
+# Face detection configuration
+face_detection:
+  model: retinaface  # Options: 'retinaface', 'opencv'
+  confidence_threshold: 0.5  # Minimum confidence for detection (0.0-1.0)
+  nms_threshold: 0.4  # Non-maximum suppression threshold
+  max_faces: 10  # Maximum number of faces to detect
+
+# Face enhancement configuration
+enhancement:
+  model: gfpgan  # Options: 'gfpgan', 'codeformer'
+  upscale_factor: 2  # Upscaling factor (1-4)
+  face_upsample: true  # Enable face upsampling
+  bg_upsampler: realesrgan  # Background upsampler: 'realesrgan' or null
+  bg_tile: 400  # Tile size for background upsampling
+  weight: 0.5  # CodeFormer fidelity weight (0=better quality, 1=better identity)
+
+# Preprocessing configuration
+preprocessing:
+  denoise: true  # Enable denoising
+  auto_contrast: true  # Enable automatic contrast adjustment
+  enhance_brightness: true  # Enable brightness enhancement (CLAHE)
+  gamma_correction: 1.0  # Gamma correction value (0.1-3.0)
+  sharpen: false  # Enable sharpening
+
+# Processing configuration
+processing:
+  batch_size: 1  # Batch size for processing
+  num_workers: 4  # Number of worker threads
+  output_format: png  # Output format: 'png', 'jpg', 'jpeg'
+  output_quality: 95  # JPEG quality (1-100)
+  save_comparison: true  # Save before/after comparison images
+  save_detections: true  # Save face detection visualizations
+
+# Model paths (optional - will auto-download if not specified)
+model_paths:
+  detection_model: null
+  gfpgan_model: null
+  codeformer_model: null
+  realesrgan_model: null
+  parsing_model: null
